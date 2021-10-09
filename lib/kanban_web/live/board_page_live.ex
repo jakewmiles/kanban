@@ -1,4 +1,4 @@
-defmodule KanbanWeb.PageLive do
+defmodule KanbanWeb.BoardPageLive do
   use Surface.LiveView
   alias KanbanWeb.ColumnContent
   alias Kanban.Card

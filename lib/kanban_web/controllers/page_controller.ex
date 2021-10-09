@@ -1,7 +1,8 @@
 defmodule KanbanWeb.PageController do
   use KanbanWeb, :controller
+  import Phoenix.LiveView.Controller
 
   def index(conn, _params) do
-    render(conn, "index.html")
+    live_render(conn, KanbanWeb.HomePageLive)
   end
 end
