@@ -18,6 +18,7 @@ defmodule KanbanWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
+    get "/error", ErrorController, :index
     get "/boards/:id", BoardController, :show
   end
 
