@@ -9,7 +9,7 @@ defmodule KanbanWeb.CardContent do
     ~F"""
     <div data-card-id={@id} class="task alert alert-success">
       <textarea phx-blur="update_card" phx-value-card={@id}>{@content}</textarea>
-      <h3 phx-value-to_delete={@id} phx-click="delete_card">⨯</h3>
+      <h3 class="delete-button" phx-value-to_delete={@id} phx-click="delete_card">⨯</h3>
     </div>
     """
   end
