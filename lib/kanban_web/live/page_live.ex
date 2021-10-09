@@ -3,9 +3,14 @@ defmodule KanbanWeb.PageLive do
   require Logger
 
   def mount(_params, %{"board_id" => board_id}, socket) do
+    topic = "board:" <> board_id
+    if connected?(socket) do
+      KanbanWeb.Endpoint.subscribe(topic)
+    end
     with {:ok, board} <- Kanban.Board.find(board_id) do
       {:ok,
         socket
+        |> assign(topic: topic)
         |> assign(board: board)
       }
     else
@@ -45,7 +50,15 @@ defmodule KanbanWeb.PageLive do
     new_card = %Kanban.Card{column_id: id, content: "Something new"}
     Kanban.Repo.insert!(new_card)
     {:ok, new_board} = Kanban.Board.find(socket.assigns.board.id)
+    KanbanWeb.Endpoint.broadcast(socket.assigns.topic, "new_board", new_board)
     {:noreply, 
+      socket
+      |> assign(board: new_board)
+    }
+  end
+
+  def handle_info(%{event: "new_board", payload: new_board}, socket) do
+    {:noreply,
       socket
       |> assign(board: new_board)
     }
