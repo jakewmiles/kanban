@@ -3,12 +3,10 @@ defmodule KanbanWeb.PageLive do
   require Logger
 
   def mount(_params, %{"board_id" => board_id}, socket) do
-    topic = "board:" <> board_id
     with {:ok, board} <- Kanban.Board.find(board_id) do
-      KanbanWeb.Endpoint.subscribe(topic)
+      KanbanWeb.Endpoint.subscribe(topic(board_id))
       {:ok,
         socket
-        |> assign(topic: topic)
         |> assign(board: board)
       }
     else
@@ -50,7 +48,7 @@ defmodule KanbanWeb.PageLive do
     new_card = %Kanban.Card{column_id: id, content: "Something new"}
     Kanban.Repo.insert!(new_card)
     {:ok, new_board} = Kanban.Board.find(socket.assigns.board.id)
-    KanbanWeb.Endpoint.broadcast(socket.assigns.topic, "new_board", new_board)
+    KanbanWeb.Endpoint.broadcast(topic(new_board.id), "new_board", new_board)
     {:noreply, 
       socket
       |> assign(board: new_board)
@@ -61,19 +59,27 @@ defmodule KanbanWeb.PageLive do
     {id, _} = Integer.parse(card_id)
     Kanban.Card.update(id, %{content: new_content})
     {:ok, new_board} = Kanban.Board.find(socket.assigns.board.id)
-    KanbanWeb.Endpoint.broadcast(socket.assigns.topic, "new_board", new_board)
+    KanbanWeb.Endpoint.broadcast(topic(new_board.id), "new_board", new_board)
     {:noreply,
       socket
       |> assign(board: new_board)
     }
   end
 
-  def handle_info(%{event: "new_board", payload: new_board}, socket) do
-    Logger.info("here", new_board)
-    {:noreply,
-      socket
-      |> assign(board: new_board)
-    }
+  def handle_info(%{topic: message_topic, event: "new_board", payload: new_board}, socket) do
+    cond do
+      topic(new_board.id) == message_topic ->
+        {:noreply,
+          socket
+          |> assign(board: Kanban.Repo.preload(new_board, columns: :cards))
+        }
+      true ->
+        {:noreply, socket}
+    end
+  end
+
+  def topic(board_id) do
+    "board:#{board_id}"
   end
   
 end
