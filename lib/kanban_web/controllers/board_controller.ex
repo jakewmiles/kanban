@@ -5,5 +5,4 @@ defmodule KanbanWeb.BoardController do
   def show(conn, %{"id" => id}) do
     live_render(conn, KanbanWeb.PageLive, session: %{"board_id" => id})
   end
-
 end

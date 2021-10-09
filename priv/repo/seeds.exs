@@ -17,4 +17,8 @@ backlog = Kanban.Repo.insert!(%Kanban.Column{title: "Backlog", board_id: board.i
 _in_progress = Kanban.Repo.insert!(%Kanban.Column{title: "In progress", board_id: board.id})
 _done = Kanban.Repo.insert!(%Kanban.Column{title: "Done", board_id: board.id})
 
-_card = Kanban.Repo.insert!(%Kanban.Card{content: "Put some nice cat picture on the homepage", column_id: backlog.id})
+_card =
+  Kanban.Repo.insert!(%Kanban.Card{
+    content: "Put some nice cat picture on the homepage",
+    column_id: backlog.id
+  })

@@ -49,7 +49,7 @@ defmodule Kanban.MixProject do
       {:gettext, "~> 0.18"},
       {:jason, "~> 1.2"},
       {:plug_cowboy, "~> 2.5"},
-      {:surface, "~> 0.5.2"},
+      {:surface, "~> 0.5.2"}
     ]
   end
 
