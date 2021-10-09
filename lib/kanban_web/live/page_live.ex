@@ -4,10 +4,8 @@ defmodule KanbanWeb.PageLive do
 
   def mount(_params, %{"board_id" => board_id}, socket) do
     topic = "board:" <> board_id
-    if connected?(socket) do
-      KanbanWeb.Endpoint.subscribe(topic)
-    end
     with {:ok, board} <- Kanban.Board.find(board_id) do
+      KanbanWeb.Endpoint.subscribe(topic)
       {:ok,
         socket
         |> assign(topic: topic)
