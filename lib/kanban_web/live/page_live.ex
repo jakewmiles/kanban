@@ -1,7 +1,6 @@
 defmodule KanbanWeb.PageLive do
   use Surface.LiveView
-  alias KanbanWeb.AddCard
-  alias KanbanWeb.CardContent
+  alias KanbanWeb.ColumnContent
   require Logger
 
   def mount(_params, %{"board_id" => board_id}, socket) do
@@ -21,21 +20,7 @@ defmodule KanbanWeb.PageLive do
     <h1> {@board.title} </h1>
     <div class="row">
     {#for column <- @board.columns}
-      <div class="col-xs-4">
-        <div class="panel panel-info">
-          <div class="panel-heading">
-            <h3 class="panel-title">{column.title}</h3>
-          </div>
-        <div class="panel-body">
-          <div class="column" data-column-id={column.id}>
-          {#for card <- column.cards}
-            <CardContent id={card.id} content={card.content}/>
-          {/for}
-            <AddCard id={column.id}/>
-          </div>
-        </div>
-      </div>
-    </div>
+      <ColumnContent title={column.title} id={column.id} cards={column.cards}/>
     {/for}
     </div>
     """
