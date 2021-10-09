@@ -1,6 +1,7 @@
 defmodule Kanban.Board do
   use Ecto.Schema
   import Ecto.Changeset
+  require Logger
 
   schema "boards" do
     field :title, :string
@@ -13,6 +14,7 @@ defmodule Kanban.Board do
     case Kanban.Board |> Kanban.Repo.get(id) do
       nil -> {:error, :not_found}
       board -> {:ok, board |> Kanban.Repo.preload(columns: :cards)}
+    end
   end
 
   @doc false
