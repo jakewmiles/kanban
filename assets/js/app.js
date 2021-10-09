@@ -2,7 +2,20 @@
 // Remove this line if you add a your own CSS build pipeline (e.g postcss).
 import "../css/app.css";
 
-dragula(Array.from(document.querySelectorAll(".column")));
+dragula(Array.from(document.querySelectorAll(".column"))).on(
+  "drop",
+  (element, target) => {
+    fetch("/api/cards" + element.dataset.cardId, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        target_column_id: target.dataset.columnId,
+      }),
+    }).then((_res) => console.log("created!"));
+  }
+);
 // If you want to use Phoenix channels, run `mix help phx.gen.channel`
 // to get started and then uncomment the line below.
 // import "./user_socket.js"
