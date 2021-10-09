@@ -10,6 +10,7 @@ textarea {
 button {
   width: 96px;
   background-color: transparent;
+  border: 1px solid #aaa;
   border-radius: 10px;
-  box-shadow: 3px 3px 10px black;
+  box-shadow: 1px 1px 3px #999;
 }
