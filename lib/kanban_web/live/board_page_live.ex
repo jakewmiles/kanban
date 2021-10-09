@@ -3,7 +3,6 @@ defmodule KanbanWeb.BoardPageLive do
   alias KanbanWeb.ColumnContent
   alias Kanban.Card
   alias Kanban.Board
-  require Logger
 
   def mount(_params, %{"board_id" => board_id}, socket) do
     with {:ok, board} <- Board.find(board_id) do
@@ -52,7 +51,6 @@ defmodule KanbanWeb.BoardPageLive do
   end
 
   def handle_event("delete_card", %{"to_delete" => id}, socket) do
-    Logger.info(id)
     to_delete = Kanban.Repo.get(Card, id)
     Kanban.Repo.delete!(to_delete)
     {:ok, new_board} = Board.find(socket.assigns.board.id)

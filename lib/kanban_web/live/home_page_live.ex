@@ -2,7 +2,6 @@ defmodule KanbanWeb.HomePageLive do
   use Surface.LiveView
   alias Surface.Components.Form
   alias Surface.Components.Form.{Field, Label, TextInput}
-  require Logger
 
   def mount(_params, _session, socket) do
     new_board = %Kanban.Board{title: ""}

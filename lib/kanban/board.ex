@@ -1,7 +1,6 @@
 defmodule Kanban.Board do
   use Ecto.Schema
   import Ecto.Changeset
-  require Logger
 
   schema "boards" do
     field :title, :string

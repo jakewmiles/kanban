@@ -5,6 +5,7 @@ defmodule KanbanWeb.ColumnContent do
   prop title, :string, required: true
   prop id, :string, required: true
   prop cards, :list, required: true
+  prop column_count, :integer, required: true
 
   def render(assigns) do
     ~F"""
@@ -16,7 +17,7 @@ defmodule KanbanWeb.ColumnContent do
         <div class="panel-body">
           <div class="column" data-column-id={@id}>
           {#for card <- @cards}
-            <CardContent id={card.id} content={card.content}/>
+            <CardContent colour_id={@id} id={card.id} content={card.content}/>
           {/for}
             <AddCard id={@id}/>
           </div>
