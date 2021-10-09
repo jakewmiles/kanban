@@ -4,6 +4,7 @@ defmodule Kanban.Board do
 
   schema "boards" do
     field :title, :string
+    has_many :columns, Kanban.Column
 
     timestamps()
   end

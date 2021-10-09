@@ -4,7 +4,8 @@ defmodule Kanban.Column do
 
   schema "columns" do
     field :title, :string
-    field :board_id, :id
+    belongs_to :board, Kanban.Board
+    has_many :cards, Kanban.Card
 
     timestamps()
   end
