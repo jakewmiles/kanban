@@ -69,6 +69,7 @@ defmodule KanbanWeb.PageLive do
   end
 
   def handle_info(%{event: "new_board", payload: new_board}, socket) do
+    Logger.info("here", new_board)
     {:noreply,
       socket
       |> assign(board: new_board)

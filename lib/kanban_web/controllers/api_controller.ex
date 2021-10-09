@@ -1,14 +1,14 @@
 defmodule KanbanWeb.ApiController do
   use KanbanWeb, :controller
   alias Kanban.Card
-
-  @topic "boards"
+  require Logger
 
   def update_card(conn, %{"id" => id, "target_column_id" => target_column_id}) do
     with {:ok, card} <- Card.update(id, %{column_id: target_column_id}) do
       new_board = card.column.board
+      Logger.info(new_board)
       KanbanWeb.Endpoint.broadcast(
-        KanbanWeb.PageLive.topic(new_board.id),
+        "board:1",
         "new_board",
         new_board
       )

@@ -5,7 +5,7 @@ import "../css/app.css";
 dragula(Array.from(document.querySelectorAll(".column"))).on(
   "drop",
   (element, target) => {
-    fetch("/api/cards" + element.dataset.cardId, {
+    fetch("/api/cards/" + element.dataset.cardId, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
