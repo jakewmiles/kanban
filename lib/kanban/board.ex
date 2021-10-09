@@ -9,6 +9,12 @@ defmodule Kanban.Board do
     timestamps()
   end
 
+  def find(id) do
+    case Kanban.Board |> Kanban.Repo.get(id) do
+      nil -> {:error, :not_found}
+      board -> {:ok, board |> Kanban.Repo.preload(columns: :cards)}
+  end
+
   @doc false
   def changeset(board, attrs) do
     board
