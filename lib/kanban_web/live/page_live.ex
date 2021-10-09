@@ -29,7 +29,9 @@ defmodule KanbanWeb.PageLive do
         <div class="panel-body">
           <div class="column" data-column-id={column.id}>
           {#for card <- column.cards}
-            <div data-card-id={card.id} class="task alert alert-success" role="alert">{card.content}</div>
+            <div data-card-id={card.id} class="task alert alert-success" role="alert">
+              <textarea phx-blur="update_card" phx-value-card={card.id}>{card.content}</textarea>
+            </div>
           {/for}
             <div>
               <button phx-value-column={column.id} phx-click="add_card">Add card</button>
@@ -50,6 +52,17 @@ defmodule KanbanWeb.PageLive do
     {:ok, new_board} = Kanban.Board.find(socket.assigns.board.id)
     KanbanWeb.Endpoint.broadcast(socket.assigns.topic, "new_board", new_board)
     {:noreply, 
+      socket
+      |> assign(board: new_board)
+    }
+  end
+
+  def handle_event("update_card", %{"card" => card_id, "value" => new_content}, socket) do
+    {id, _} = Integer.parse(card_id)
+    Kanban.Card.update(id, %{content: new_content})
+    {:ok, new_board} = Kanban.Board.find(socket.assigns.board.id)
+    KanbanWeb.Endpoint.broadcast(socket.assigns.topic, "new_board", new_board)
+    {:noreply,
       socket
       |> assign(board: new_board)
     }

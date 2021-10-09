@@ -1,2 +1,7 @@
 /* This file is for your main application CSS */
 @import "./phoenix.css";
+
+textarea {
+  background-color: transparent;
+  border: 0px dotted transparent;
+}
