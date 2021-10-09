@@ -1,5 +1,6 @@
 defmodule KanbanWeb.PageLive do
   use Surface.LiveView
+  alias KanbanWeb.AddCard
   require Logger
 
   def mount(_params, %{"board_id" => board_id}, socket) do
@@ -31,9 +32,7 @@ defmodule KanbanWeb.PageLive do
               <textarea phx-blur="update_card" phx-value-card={card.id}>{card.content}</textarea>
             </div>
           {/for}
-            <div>
-              <button phx-value-column={column.id} phx-click="add_card">Add card</button>
-            </div>
+            <AddCard id={column.id}/>
           </div>
         </div>
       </div>
