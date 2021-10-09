@@ -59,11 +59,10 @@ defmodule KanbanWeb.HomePageLive do
 
   def handle_event("create_board", _params, socket) do
     new_board = Kanban.Repo.insert!(%Kanban.Board{title: socket.assigns.board_name})
-    Logger.info(new_board)
-    # column1 = Kanban.Repo.insert!(%Kanban.Column{title: socket.assigns.first, board_id: board.id})
-    # in_progress = Kanban.Repo.insert!(%Kanban.Column{title: "In progress", board_id: board.id})
-    # done = Kanban.Repo.insert!(%Kanban.Column{title: "Done", board_id: board.id})
-    {:noreply, socket}
+    column1 = Kanban.Repo.insert!(%Kanban.Column{title: socket.assigns.first, board_id: new_board.id})
+    column2 = Kanban.Repo.insert!(%Kanban.Column{title: socket.assigns.second, board_id: new_board.id})
+    column3 = Kanban.Repo.insert!(%Kanban.Column{title: socket.assigns.third, board_id: new_board.id})
+    {:noreply, push_redirect(socket, to: "/boards/" <> Integer.to_string(new_board.id))}
   end
 
 end
