@@ -17,7 +17,7 @@ defmodule KanbanWeb.Router do
   scope "/", KanbanWeb do
     pipe_through :browser
 
-    get "/", PageController, :index
+    get "/boards/:id", BoardController, :show
   end
 
   # Other scopes may use custom stacks.
