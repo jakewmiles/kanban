@@ -16,25 +16,27 @@ defmodule KanbanWeb.HomePageLive do
 
   def render(assigns) do
     ~F"""
-    <Form for={:board} change="update_board" opts={autocomplete: "off"}>
-      <Field name="title">
-        <Label/>
-        <div class="control">
-          <TextInput value={@board.title} />
-        </div>
-      </Field>
-    </Form>
-    <Form for={:column} change="update_column" opts={autocomplete: "off"}>
-      {#for column <- @columns}
-      <Field name={column}>
-        <Label/>
-        <div class="control">
-          <TextInput value={@column.title} />
-        </div>
-      </Field>
-      {/for}
-    </Form>
-    <button phx-click="create_board">Create board</button>
+    <div class="new-board-form">
+      <Form for={:board} change="update_board" opts={autocomplete: "off"}>
+        <Field name="title">
+          <Label/>
+          <div class="control">
+            <TextInput value={@board.title} />
+          </div>
+        </Field>
+      </Form>
+      <Form for={:column} change="update_column" opts={autocomplete: "off"}>
+        {#for column <- @columns}
+        <Field name={column}>
+          <Label/>
+          <div class="control">
+            <TextInput value={@column.title} />
+          </div>
+        </Field>
+        {/for}
+      </Form>
+      <button phx-click="create_board">Create board</button>
+    </div>
     """
   end
   

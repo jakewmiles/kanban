@@ -29,7 +29,7 @@ defmodule KanbanWeb.BoardPageLive do
 
   def handle_event("add_card", %{"column" => column_id}, socket) do
     {id, _} = Integer.parse(column_id)
-    new_card = %Card{column_id: id, content: "Something new"}
+    new_card = %Card{column_id: id, content: "..."}
     Kanban.Repo.insert!(new_card)
     {:ok, new_board} = Board.find(socket.assigns.board.id)
     KanbanWeb.Endpoint.broadcast(topic(new_board.id), "new_board", new_board)
